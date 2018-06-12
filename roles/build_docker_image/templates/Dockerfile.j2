@@ -1,0 +1,34 @@
+FROM ubuntu:16.04
+
+MAINTAINER Vladyslav Khalamendyk "khvlad89@gmail.com"
+
+RUN apt-get update
+RUN apt-get install -y software-properties-common
+
+# Install Nginx.
+RUN \
+  add-apt-repository -y ppa:nginx/stable && \
+  apt-get update && \
+  apt-get install -y nginx && \
+  rm -rf /var/lib/apt/lists/* && \
+  echo "\ndaemon off;" >> /etc/nginx/nginx.conf && \
+  chown -R www-data:www-data /var/lib/nginx
+
+
+# Install HAproxy
+RUN \
+  apt-get update && \
+  apt-get install -y haproxy
+
+# Install Supervisor
+RUN apt-get update && apt-get install -y supervisor
+RUN mkdir -p /var/log/supervisor
+COPY supervisord.conf /etc/supervisor/supervisord.conf
+
+# Expose ports.
+EXPOSE {{ expose_ports }}
+
+# Define mountable directories.
+VOLUME ["/etc/nginx/", "/usr/share/nginx/html", "/etc/haproxy/"]
+
+CMD ["/usr/bin/supervisord"]

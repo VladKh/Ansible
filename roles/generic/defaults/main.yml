@@ -1,0 +1,8 @@
+app_dir:                            "/app"
+tools_dir:                          "{{ app_dir }}/tools"
+nginx_dir:                          "{{ tools_dir }}/nginx"
+haproxy_dir:                        "{{ tools_dir }}/haproxy"
+docker_dir:                         "{{ tools_dir }}/docker"
+
+application_user_name:              "{{ ansible_ssh_user }}"
+application_user_group:             "{{ ansible_ssh_user }}"

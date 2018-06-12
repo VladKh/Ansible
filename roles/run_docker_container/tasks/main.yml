@@ -1,0 +1,11 @@
+---
+
+- name: "Generate docker-compose.yml file"
+  template:
+    src: "roles/run_docker_container/templates/docker-compose.yml.j2"
+    dest: "{{ docker_dir }}/docker-compose.yml"
+    mode: 0644
+
+- name: "Run docker-compose.yml file"
+  docker_service:
+    project_src: "{{ docker_dir }}/"

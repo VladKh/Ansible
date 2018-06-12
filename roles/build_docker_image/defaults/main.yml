@@ -1,0 +1,8 @@
+app_dir:                            "/app"
+tools_dir:                          "{{ app_dir }}/tools"
+docker_dir:                         "{{ tools_dir }}/docker"
+
+############################## Docker image vars ##############################
+docker_image_name:                  "ubuntu_haproxy_nginx"
+docker_image_tag:                   "v1"
+expose_ports:                       "80 9111"

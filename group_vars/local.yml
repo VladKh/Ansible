@@ -1,0 +1,15 @@
+app_dir:                            "/app"
+tools_dir:                          "{{ app_dir }}/tools"
+nginx_dir:                          "{{ tools_dir }}/nginx"
+haproxy_dir:                        "{{ tools_dir }}/haproxy"
+docker_dir:                         "{{ tools_dir }}/docker"
+
+############################# Docker-compose vars #############################
+docker_container_master_name:       "master"
+docker_container_slave_name:        "slave"
+docker_image_name:                  "ubuntu_haproxy_nginx"
+docker_image_tag:                   "v1"
+
+############################# HAproxy vars #############################
+haproxy_user:                        "admin"
+haproxy_password:                    "123456"

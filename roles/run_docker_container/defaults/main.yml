@@ -1,0 +1,31 @@
+app_dir:                            "/app"
+tools_dir:                          "{{ app_dir }}/tools"
+nginx_dir:                          "{{ tools_dir }}/nginx"
+haproxy_dir:                        "{{ tools_dir }}/haproxy"
+docker_dir:                         "{{ tools_dir }}/docker"
+
+############################# Docker-compose vars #############################
+docker_image_name:                  "ubuntu_haproxy_nginx"
+docker_image_tag:                   "v1"
+docker_container_master_name:       "master"
+docker_container_slave_name:        "slave"
+
+docker_network:                     "balance"
+docker_container_master_ports:
+  - "4999:80"
+  - "9111:9111"
+docker_container_slave_ports:
+  - "4998:80"
+  - "9110:9111"
+
+docker_container_master_volumes:
+  - "{{ haproxy_dir }}/master/haproxy.cfg:/etc/haproxy/haproxy.cfg"
+  - "{{ nginx_dir }}/master/nginx.conf:/etc/nginx/nginx.conf"
+  - "{{ nginx_dir }}/master/default.conf:/etc/nginx/conf.d/default.conf"
+  - "{{ nginx_dir }}/master/status.html:/usr/share/nginx/html/status.html"
+
+docker_container_slave_volumes:
+  - "{{ haproxy_dir }}/slave/haproxy.cfg:/etc/haproxy/haproxy.cfg"
+  - "{{ nginx_dir }}/slave/nginx.conf:/etc/nginx/nginx.conf"
+  - "{{ nginx_dir }}/slave/default.conf:/etc/nginx/conf.d/default.conf"
+  - "{{ nginx_dir }}/slave/status.html:/usr/share/nginx/html/status.html"

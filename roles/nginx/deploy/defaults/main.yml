@@ -1,0 +1,13 @@
+############################# Local variables ##################################
+app_dir:                            "/app"
+tools_dir:                          "{{ app_dir }}/tools"
+local_nginx_dir:                    "{{ tools_dir }}/nginx"
+
+############################# Docker-container vars ############################
+
+container_nginx_dir:                "/etc/nginx"
+nginx_port:                         "8000"
+nginx_ssl_dir:                      "{{ container_nginx_dir }}/ssl"
+nginx_conf_dir:                     "{{ container_nginx_dir }}/conf.d"
+nginx_log_dir:                      "/var/log/nginx"
+nginx_root_dir:                     "/usr/share/nginx/html"

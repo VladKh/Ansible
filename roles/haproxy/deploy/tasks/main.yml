@@ -1,0 +1,10 @@
+---
+
+- name: "Generate haproxy.cfg file"
+  template:
+    src: "roles/haproxy/deploy/templates/haproxy.cfg.j2"
+    dest: "{{ local_haproxy_dir }}/{{ item }}/haproxy.cfg"
+    mode: 0644
+  with_items:
+    - "{{ docker_container_master_name }}"
+    - "{{ docker_container_slave_name }}"

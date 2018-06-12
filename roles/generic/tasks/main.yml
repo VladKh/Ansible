@@ -1,0 +1,52 @@
+---
+
+- name: "Create {{ tools_dir }}"
+  file:
+    path: "{{ tools_dir }}"
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: "Create {{ haproxy_dir }}/slave"
+  file:
+    path: "{{ haproxy_dir }}/slave"
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: "Create {{ haproxy_dir }}/master"
+  file:
+    path: "{{ haproxy_dir }}/master"
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: "Create {{ nginx_dir }}/slave"
+  file:
+    path: "{{ nginx_dir }}/slave"
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: "Create {{ nginx_dir }}/master"
+  file:
+    path: "{{ nginx_dir }}/master"
+    state: directory
+    mode: 0755
+    recurse: yes
+
+- name: "Create {{ docker_dir }}"
+  file:
+    path: "{{ docker_dir }}"
+    state: directory
+    mode: 0755
+
+- name: "Set attributes for {{ app_dir }}/*"
+  file:
+    path: "{{ app_dir }}"
+    state: directory
+    owner: "{{ application_user_name }}"
+    group: "{{ application_user_group }}"
+    mode: 0755
+    recurse: yes
+  ignore_errors: True

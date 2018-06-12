@@ -1,0 +1,8 @@
+docker_container_master_nginx_check_url:            "http://localhost:4999/status.html"
+docker_container_master_haproxy_check_url:          "http://localhost:4999/stats"
+
+docker_container_slave_nginx_check_url:             "http://localhost:4998/status.html"
+docker_container_slave_haproxy_check_url:           "http://localhost:4999/stats"
+
+haproxy_user:                                       "admin"
+haproxy_password:                                   "123456"

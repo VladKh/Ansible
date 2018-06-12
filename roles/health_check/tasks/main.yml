@@ -1,0 +1,63 @@
+---
+
+- name: "Health check response from HAproxy MASTER container"
+  uri:
+    url: "{{ docker_container_master_haproxy_check_url }}"
+    method: POST
+    user: "{{ haproxy_user }}"
+    password: "{{ haproxy_password }}"
+
+- name: "Health check response from HAproxy SLAVE container"
+  uri:
+    url: "{{ docker_container_slave_haproxy_check_url }}"
+    method: POST
+    user: "{{ haproxy_user }}"
+    password: "{{ haproxy_password }}"
+
+# I do not know why it shows always the same result, unlike the hardcode of 'shell command'
+#
+# - name: "Health check response from Nginx MASTER container"
+#   debug: msg="{{ lookup('url', '{{ docker_container_master_nginx_check_url }}', split_lines=False) }}"
+#   register: task_result
+#   until: task_result == 0
+#   retries: 5
+#   delay: 1
+#   ignore_errors: yes
+#
+# - name: "Health check response from Nginx SLAVE container"
+#   debug: msg="{{ lookup('url', '{{ docker_container_slave_nginx_check_url }}', split_lines=False) }}"
+#   register: task_result
+#   until: task_result == 0
+#   retries: 5
+#   delay: 1
+#   ignore_errors: yes
+#
+- name: "Health check response from Nginx MASTER container"
+  shell: "curl {{ docker_container_master_nginx_check_url }} |grep 'h1'"
+  loop:
+    - "curl {{ docker_container_master_nginx_check_url }} |grep 'h1'"
+    - "curl {{ docker_container_master_nginx_check_url }} |grep 'h1'"
+    - "curl {{ docker_container_master_nginx_check_url }} |grep 'h1'"
+    - "curl {{ docker_container_master_nginx_check_url }} |grep 'h1'"
+    - "curl {{ docker_container_master_nginx_check_url }} |grep 'h1'"
+  register: master_output
+
+- name: "Health check response from Nginx SLAVE container"
+  shell: "curl {{ docker_container_slave_nginx_check_url }} |grep 'h1'"
+  loop:
+    - "curl {{ docker_container_slave_nginx_check_url }} |grep 'h1'"
+    - "curl {{ docker_container_slave_nginx_check_url }} |grep 'h1'"
+    - "curl {{ docker_container_slave_nginx_check_url }} |grep 'h1'"
+    - "curl {{ docker_container_slave_nginx_check_url }} |grep 'h1'"
+    - "curl {{ docker_container_slave_nginx_check_url }} |grep 'h1'"
+  register: slave_output
+
+- name: "Print response from Nginx MASTER container"
+  debug:
+    msg: "{{ item.stdout }}"
+  loop: "{{ master_output.results }}"
+
+- name: "Print response from Nginx SLAVE container"
+  debug:
+    msg: "{{ item.stdout }}"
+  loop: "{{ slave_output.results }}"

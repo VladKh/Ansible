@@ -1,0 +1,19 @@
+---
+
+- name: "Generate supervisord.conf file"
+  template:
+    src: "roles/build_docker_image/templates/supervisord.conf.j2"
+    dest: "{{ docker_dir }}/supervisord.conf"
+    mode: 0644
+
+- name: "Generate Dockerfile"
+  template:
+    src: "roles/build_docker_image/templates/Dockerfile.j2"
+    dest: "{{ docker_dir }}/Dockerfile"
+    mode: 0644
+
+- name: "Build docker image"
+  docker_image:
+     path: "{{ docker_dir }}"
+     name: "{{ docker_image_name }}"
+     tag: "{{ docker_image_tag }}"

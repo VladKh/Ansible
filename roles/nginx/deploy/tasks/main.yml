@@ -1,0 +1,28 @@
+---
+
+- name: "Generate nginx.conf file"
+  template:
+    src: "roles/nginx/deploy/templates/nginx.conf.j2"
+    dest: "{{ local_nginx_dir }}/{{ item }}/nginx.conf"
+    mode: 0644
+  with_items:
+    - "{{ docker_container_master_name }}"
+    - "{{ docker_container_slave_name }}"
+
+- name: "Generate default file"
+  template:
+    src: "roles/nginx/deploy/templates/default.conf.j2"
+    dest: "{{ local_nginx_dir }}/{{ item }}/default.conf"
+    mode: 0644
+  with_items:
+    - "{{ docker_container_master_name }}"
+    - "{{ docker_container_slave_name }}"
+
+- name: "Generate status.html file"
+  template:
+    src: "roles/nginx/deploy/templates/status.html.j2"
+    dest: "{{ local_nginx_dir }}/{{ item }}/status.html"
+    mode: 0644
+  with_items:
+    - "{{ docker_container_master_name }}"
+    - "{{ docker_container_slave_name }}"

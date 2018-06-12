@@ -1,0 +1,7 @@
+---
+
+- include: 1-pre-requirements.yml
+
+- include: 2-install.yml
+
+- include: 3-configure.yml

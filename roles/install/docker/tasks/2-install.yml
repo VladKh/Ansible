@@ -1,0 +1,23 @@
+---
+
+- name: "Install docker"
+  apt:
+    name: "docker-ce={{ docker_version }}"
+    state: present
+
+- name: "Enable docker systemd service"
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: "Install pip"
+  easy_install:
+    name: pip
+    state: latest
+
+- name: "Install Python lib docker-compose"
+  pip:
+    name: docker-compose
+    version: "{{ docker_compose_version }}"
+    state: present

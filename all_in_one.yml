@@ -1,0 +1,8 @@
+---
+
+- import_playbook: generic.yml
+- import_playbook: install_docker.yml
+- import_playbook: build_docker_image.yml
+- import_playbook: service_deployment.yml
+- import_playbook: run_docker_container.yml
+- import_playbook: health_check.yml
